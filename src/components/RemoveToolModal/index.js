@@ -20,8 +20,7 @@ export default function RemoveToolModal({
   modal,
   handleToggleModalRemove,
   handleSearch,
-  toolIdToRemove,
-  toolTitleToRemove,
+  tool,
 }) {
   const tools = useSelector(state => state.tools);
 
@@ -36,7 +35,7 @@ export default function RemoveToolModal({
     event.preventDefault();
     event.stopPropagation();
 
-    dispatch(ToolsActions.removeRequest(toolIdToRemove));
+    dispatch(ToolsActions.removeRequest(tool.id));
 
     setTimeout(() => {
       handleSuccess();
@@ -53,10 +52,10 @@ export default function RemoveToolModal({
         <ModalBody>
           {tools.successRemove && (
             <Alert color="success">
-              {toolTitleToRemove} was removed with success.
+              {tool.title} was removed with success.
             </Alert>
           )}
-          Are you sure you want to remove {toolTitleToRemove}?
+          Are you sure you want to remove {tool.title}?
           {!!tools.error && (
             <Alert color="danger">
               Oops something went wrong :( Please contact your administrator.
@@ -80,8 +79,13 @@ RemoveToolModal.propTypes = {
   modal: PropTypes.bool.isRequired,
   handleToggleModalRemove: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
-  toolIdToRemove: PropTypes.number.isRequired,
-  toolTitleToRemove: PropTypes.string.isRequired,
+  tool: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    link: PropTypes.string,
+    description: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
   tools: PropTypes.shape({
     data: PropTypes.arrayOf(
       PropTypes.shape({

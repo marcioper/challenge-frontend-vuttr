@@ -16,8 +16,7 @@ export default function Main() {
   const [toolSearchCheckInput, setToolSearchCheckInput] = useState(false);
   const [modalAdd, setModalAdd] = useState(false);
   const [modalRemove, setModalRemove] = useState(false);
-  const [toolIdToRemove, setToolIdToRemove] = useState(0);
-  const [toolTitleToRemove, setToolTitleToRemove] = useState('');
+  const [tool, setTool] = useState({});
   const tools = useSelector(state => state.tools);
 
   const dispatch = useDispatch();
@@ -38,17 +37,19 @@ export default function Main() {
     setModalAdd(!modalAdd);
   };
 
-  const handleToggleModalRemove = tool => {
-    const { id, title } = tool;
-    let valID = id;
-    let valTitle = title;
-    if (!tool.id) {
-      valID = 0;
-      valTitle = '';
+  const handleToggleModalRemove = objTool => {
+    let toolObj = objTool;
+    if (!toolObj) {
+      toolObj = {
+        id: 0,
+        title: '',
+        link: '',
+        description: '',
+        tags: '',
+      };
     }
     setModalRemove(!modalRemove);
-    setToolIdToRemove(valID);
-    setToolTitleToRemove(valTitle);
+    setTool(toolObj);
   };
 
   return (
@@ -63,8 +64,7 @@ export default function Main() {
         modal={modalRemove}
         handleToggleModalRemove={handleToggleModalRemove}
         handleSearch={handleSearch}
-        toolIdToRemove={toolIdToRemove}
-        toolTitleToRemove={toolTitleToRemove}
+        tool={tool}
       />
       <Row>
         <Col xs="12" md="2">

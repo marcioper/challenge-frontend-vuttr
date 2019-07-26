@@ -29,6 +29,7 @@ export default function tools(state = INITIAL_STATE, action) {
       return {
         ...state,
         loading: true,
+        successRemove: false,
         error: '',
       };
     case Types.GET_SUCCESS:
@@ -36,18 +37,21 @@ export default function tools(state = INITIAL_STATE, action) {
         ...state,
         data: action.payload.data,
         loading: false,
+        successRemove: false,
         error: '',
       };
     case Types.GET_FAILURE:
       return {
         ...state,
         loading: false,
+        successRemove: false,
         error: action.payload.message,
       };
     case Types.ADD_REQUEST:
       return {
         ...state,
         loading: true,
+        successRemove: false,
         error: '',
       };
     case Types.ADD_SUCCESS:
@@ -55,12 +59,14 @@ export default function tools(state = INITIAL_STATE, action) {
         ...state,
         data: [...state.data, action.payload.tool],
         loading: false,
+        successRemove: false,
         error: '',
       };
     case Types.ADD_FAILURE:
       return {
         ...state,
         loading: false,
+        successRemove: false,
         error: action.payload.message,
       };
     case Types.REMOVE_REQUEST:
